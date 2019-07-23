@@ -4,8 +4,8 @@
     <title>单表示例Demo</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="./static/plugins/elementui/2.10.1/index.min.css" type="text/css">
-    <link rel="stylesheet" href="./static/css/vueCommon.css" type="text/css">
+    <link rel="stylesheet" href="../plugins/elementui/2.10.1/index.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/vueCommon.css" type="text/css">
 </head>
 <body>
 <div id="app" class="app-container" v-loading.lock="loading.body" v-cloak>
@@ -66,9 +66,9 @@
                 <el-form :model="insertData" :rules="rules_insert" ref="form_insert" label-width="120px"
                          class="insertForm">
                     <keepercloud-form-data :column_config.sync="columnConfig" :item.sync="item" :show.sync="item.show.insert"
-                                           :form_data.sync="insertData"
-                                           v-for="(item,index) in columnConfig"
-                                           :key="item.field"></keepercloud-form-data>
+                                             :form_data.sync="insertData"
+                                             v-for="(item,index) in columnConfig"
+                                             :key="item.field"></keepercloud-form-data>
                 </el-form>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -80,8 +80,8 @@
             <el-form :model="editData" :rules="rules_edit" ref="form_edit" label-width="120px" class="insertForm">
                 <keepercloud-form-data :column_config.sync="columnConfig" :item.sync="item" :form_data.sync="editData"
                                        :show.sync="item.show.edit"
-                                       v-for="(item,index) in columnConfig"
-                                       :key="item.field"></keepercloud-form-data>
+                                         v-for="(item,index) in columnConfig"
+                                         :key="item.field"></keepercloud-form-data>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="resetForm('form_edit'); loading.edit = false">取 消</el-button>
@@ -92,34 +92,34 @@
 
 </div>
 <!-- 引入组件库 -->
-<script src="./static/libs/axios.js"></script>
-<script type="text/javascript" src="./static/libs/vue.js"></script>
-<script src="./static/plugins/elementui/2.10.1/index.min.js"></script>
-<script type="text/javascript" src="./static/plugins/requirejs/require.js"></script>
-<script type="text/javascript" src="./static/js/vueCommon.js"></script>
+<script src="../libs/axios.js"></script>
+<script type="text/javascript" src="../libs/vue.js"></script>
+<script src="../plugins/elementui/2.10.1/index.min.js"></script>
+<script type="text/javascript" src="../plugins/requirejs/require.js"></script>
+<script type="text/javascript" src="../js/vueCommon.js"></script>
 <script type="text/javascript">
     let vue = new Vue({
         el: "#app",
         components: {
             'keepercloud-head-form': function (resolve) {
                 // 用于展示头部查询框
-                require(['./static/js/headForm.js'], resolve);
+                require(['../js/headForm.js'], resolve);
             },
             'keepercloud-head-button': function (resolve) {
                 // 用于展示头部操作按钮
-                require(['./static/js/headButton.js'], resolve);
+                require(['../js/headButton.js'], resolve);
             },
             'keepercloud-table-data': function (resolve) {
                 // 用于展示表格数据
-                require(['./static/js/tableData.js'], resolve);
+                require(['../js/tableData.js'], resolve);
             },
             'keepercloud-table-pagination': function (resolve) {
                 // 用于展示表格分页工具栏
-                require(['./static/js/tablePagination.js'], resolve);
+                require(['../js/tablePagination.js'], resolve);
             },
             'keepercloud-form-data': function (resolve) {
                 // 用于展示表格分页工具栏
-                require(['./static/js/formData.js'], resolve);
+                require(['../js/formData.js'], resolve);
             }
         },
         data() {
@@ -322,15 +322,14 @@
                 let self = this;
                 // 新增操作
                 let keyValue = self.editData[self.keyField];
-                let localData = localStorage.getItem(self.localStorageName);
-                localData = JSON.parse(localData);
+                let localData = self.tableData;
                 localData.forEach((current, index, arrs) => {
-                    if (current[self.keyField] === keyValue) {
-                        Object.assign(current, self.editData); // 原对象也会改变
-                        current.updateBy = "tester2";
-                        current.updateName = "测试员2";
-                        current.updateTime = new Date();
-                    }
+                   if (current[self.keyField] === keyValue) {
+                       Object.assign(current, self.editData); // 原对象也会改变
+                       current.updateBy = "tester2";
+                       current.updateName = "测试员2";
+                       current.updateTime = new Date();
+                   }
                 });
                 localStorage.setItem(self.localStorageName, JSON.stringify(localData));
                 self.queryBtn();
@@ -351,27 +350,18 @@
                         name: "张三",
                         sex: 1,
                         birthLocation: "hn",
-                        createBy: "zhangsan",
-                        createName: "张三",
-                        createTime: new Date(),
                     });
                     item.push({
                         id: UUID(),
                         name: "李四",
                         sex: 1,
                         birthLocation: "bj",
-                        createBy: "lisi",
-                        createName: "李四",
-                        createTime: new Date(),
                     });
                     item.push({
                         id: UUID(),
                         name: "王舞",
                         sex: 0,
-                        birthLocation: "fj",
-                        createBy: "wangwu",
-                        createName: "王舞",
-                        createTime: new Date(),
+                        birthLocation: "bj",
                     });
                 }
             }
